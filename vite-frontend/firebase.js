@@ -26,29 +26,41 @@ import {
   doc,
   addDoc,
   serverTimestamp,
-  setDoc,
+  setDoc
 } from "firebase/firestore";
 
 import {
+  connectFunctionsEmulator,
+  getFunctions,
+  httpsCallable
+} from "firebase/functions";
+
+import {
   getAuth,
+  updateProfile,
   connectAuthEmulator,
+  signInWithPhoneNumber,
   onAuthStateChanged,
   reauthenticateWithRedirect,
+  RecaptchaVerifier
 } from "firebase/auth";
 import { firebaseConfig } from "./config";
 import { where } from "firebase/firestore";
+
 function initializeServices() {
   const isConfigured = getApps().length > 0;
   const firebaseApp = initializeApp(firebaseConfig);
   const firestore = getFirestore(firebaseApp);
   const auth = getAuth(firebaseApp);
-  return { firebaseApp, firestore, auth, isConfigured };
+  const functions = getFunctions(firebaseApp)
+  return { firebaseApp, firestore, auth, isConfigured, functions };
 }
 
-function connectToEmulators({ auth, firestore }) {
+function connectToEmulators({ auth, firestore, functions }) {
   if (location.hostname === "localhost") {
     connectFirestoreEmulator(firestore, "localhost", 8080);
     connectAuthEmulator(auth, "http://localhost:9099");
+    connectFunctionsEmulator(functions, "localhost", 5001);
     console.log("auth emulators");
   }
 }
@@ -62,7 +74,13 @@ export function getFirebase() {
   return services;
 }
 
-export function streamMessages() {
+export function newOrder(data) {
+  const { functions } = getFirebase();
+  const newOrder = httpsCallable(functions, 'newOrder');
+  return newOrder(data)
+}
+
+export function getMenu() {
   const MENU_DOC_ID = "menu_items";
   const MENU_COLLECTION_ID = "menu";
   const { firestore } = getFirebase();
@@ -71,53 +89,6 @@ export function streamMessages() {
   const unsub = onSnapshot(menuDoc, (document) => {
     console.log("Current data: ", document.data());
   });
-
-    setDoc(doc(firestore,'menu/menu_items'),{
-      "stall1": {
-          "23": {
-              "price": 22,
-              "name": "Vada Pav",
-              "availability": true
-          },
-          "24": {
-              "price": 20,
-              "name": "Kanda Bhaji",
-              "availability": true
-          }
-      },
-      "stall2": {
-          "45": {
-              "price": 35,
-              "name": "Plain Dosa",
-              "availability": true
-          },
-          "67": {
-              "price": 30,
-              "name": "Wada Sambar",
-              "availability": true
-          }
-      }
-  })
-  // const menuCol = collection(firestore, 'menu', MENU_DOC_ID, 'messages')
-  // const menuDoc = doc(menuCol, MENU_DOC_ID )
-  // const stream = (callback) => onSnapshot(menuDoc, snapshot => {
-  //   const messages = snapshot.docs.map(doc => {
-  //     const isDelivered = !doc.metadata.hasPendingWrites;
-  //     return {
-  //       isDelivered,
-  //       id: doc.id,
-  //       ...doc.data()
-  //     };
-  //   })
-
-  //   callback(messages);
-  // });
-
-  // const addMessage = (message) => addDoc(messagesCol, {
-  //   timestamp: serverTimestamp(),
-  //   ...message,
-  // });
-  // return { stream, addMessage };
   return { unsub };
 }
 
@@ -126,5 +97,54 @@ export function onAuth(callback) {
   return onAuthStateChanged(auth, (user) => {
     console.log(user);
     callback(user);
+  });
+}
+
+export function updateNamePhoneProfile(name, phone_number) {
+  const { auth, functions } = getFirebase();
+  updateProfile(auth.currentUser, {
+    displayName: name,
+  })
+    .then(() => {
+      console.log("Profile Updated", name);
+
+    }).catch((error) => {
+      console.log(error);
+      // An error occurred
+      // ...
+    });
+
+  const updatePhone = httpsCallable(functions, 'updatePhone');
+  updatePhone({ phone_number: phone_number })
+
+}
+
+
+export function onSignInSubmit(phone_number) {
+  const appVerifier = window.recaptchaVerifier;
+  const {auth} = getFirebase();
+  signInWithPhoneNumber(auth, phone_number, appVerifier)
+    .then((confirmationResult) => {
+      // SMS sent. Prompt user to type the code from the message, then sign the
+      // user in with confirmationResult.confirm(code).
+      console.log("sign in with phone number initiated");
+      window.confirmationResult = confirmationResult;
+      // ...
+    }).catch((error) => {
+      console.log(error , "SMS not sent");
+      // Error; SMS not sent
+      // ...
+    });
+  // [END auth_phone_signin]
+}
+
+export function verifyCode(verification_code) {
+
+  confirmationResult.confirm(verification_code).then((result) => {
+    // User signed in successfully.
+    const user = result.user;
+    console.log("User signed in successfully.");
+  }).catch((error) => {
+    console.log("User couldn't sign in (bad verification code?)");
   });
 }

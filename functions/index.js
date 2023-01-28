@@ -47,7 +47,7 @@ exports.newOrder = functions.https.onCall(async (data, context) => {
     order.user_info = {
       email: context.auth.token.email,
       uid: context.auth.token.uid,
-      phone_number: user.customClaims.phone_number,
+      // phone_number: user.customClaims.phone_number,
       name: user.displayName,
     }
     return admin.firestore().collection('orders').add(order)

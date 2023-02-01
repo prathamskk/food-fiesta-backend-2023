@@ -86,7 +86,7 @@ function order_items_formatter(menu_data, data) {
 }
 
 function random_six_digit_order_id_generator() {
-  var minm = 10000;
-  var maxm = 99999;
+  var minm = 100000;
+  var maxm = 999999;
   return Math.floor(Math.random() * (maxm - minm + 1)) + minm;
 }

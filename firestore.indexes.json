@@ -19,12 +19,180 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "user_id",
+          "fieldPath": "stall_order.stall1.status",
           "order": "ASCENDING"
         },
         {
           "fieldPath": "order_placed_timestamp",
-          "order": "DESCENDING"
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall10.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall11.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall12.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall2.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall3.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall4.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall5.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall6.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall7.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall8.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "stall_order.stall9.status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user_info.uid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "order_placed_timestamp",
+          "order": "ASCENDING"
         }
       ]
     }

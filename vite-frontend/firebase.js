@@ -26,13 +26,13 @@ import {
   doc,
   addDoc,
   serverTimestamp,
-  setDoc
+  setDoc,
 } from "firebase/firestore";
 
 import {
   connectFunctionsEmulator,
   getFunctions,
-  httpsCallable
+  httpsCallable,
 } from "firebase/functions";
 
 import {
@@ -42,7 +42,7 @@ import {
   signInWithPhoneNumber,
   onAuthStateChanged,
   reauthenticateWithRedirect,
-  RecaptchaVerifier
+  RecaptchaVerifier,
 } from "firebase/auth";
 import { firebaseConfig } from "./config";
 import { where } from "firebase/firestore";
@@ -52,7 +52,7 @@ function initializeServices() {
   const firebaseApp = initializeApp(firebaseConfig);
   const firestore = getFirestore(firebaseApp);
   const auth = getAuth(firebaseApp);
-  const functions = getFunctions(firebaseApp)
+  const functions = getFunctions(firebaseApp);
   return { firebaseApp, firestore, auth, isConfigured, functions };
 }
 
@@ -76,8 +76,8 @@ export function getFirebase() {
 
 export function newOrder(data) {
   const { functions } = getFirebase();
-  const newOrder = httpsCallable(functions, 'newOrder');
-  return newOrder(data)
+  const newOrder = httpsCallable(functions, "newOrder");
+  return newOrder(data);
 }
 
 export function getMenu() {
@@ -100,29 +100,16 @@ export function onAuth(callback) {
   });
 }
 
-export function updateNamePhoneProfile(name, phone_number) {
-  const { auth, functions } = getFirebase();
-  updateProfile(auth.currentUser, {
-    displayName: name,
-  })
-    .then(() => {
-      console.log("Profile Updated", name);
+export function updatePhone(phone_number) {
+  const { functions } = getFirebase();
 
-    }).catch((error) => {
-      console.log(error);
-      // An error occurred
-      // ...
-    });
-
-  const updatePhone = httpsCallable(functions, 'updatePhone');
-  updatePhone({ phone_number: phone_number })
-
+  const updatePhone = httpsCallable(functions, "updatePhone");
+  updatePhone({ phone_number: phone_number });
 }
-
 
 export function onSignInSubmit(phone_number) {
   const appVerifier = window.recaptchaVerifier;
-  const {auth} = getFirebase();
+  const { auth } = getFirebase();
   signInWithPhoneNumber(auth, phone_number, appVerifier)
     .then((confirmationResult) => {
       // SMS sent. Prompt user to type the code from the message, then sign the
@@ -130,8 +117,9 @@ export function onSignInSubmit(phone_number) {
       console.log("sign in with phone number initiated");
       window.confirmationResult = confirmationResult;
       // ...
-    }).catch((error) => {
-      console.log(error , "SMS not sent");
+    })
+    .catch((error) => {
+      console.log(error, "SMS not sent");
       // Error; SMS not sent
       // ...
     });
@@ -139,12 +127,14 @@ export function onSignInSubmit(phone_number) {
 }
 
 export function verifyCode(verification_code) {
-
-  confirmationResult.confirm(verification_code).then((result) => {
-    // User signed in successfully.
-    const user = result.user;
-    console.log("User signed in successfully.");
-  }).catch((error) => {
-    console.log("User couldn't sign in (bad verification code?)");
-  });
+  confirmationResult
+    .confirm(verification_code)
+    .then((result) => {
+      // User signed in successfully.
+      const user = result.user;
+      console.log("User signed in successfully.");
+    })
+    .catch((error) => {
+      console.log("User couldn't sign in (bad verification code?)");
+    });
 }

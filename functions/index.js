@@ -29,9 +29,54 @@ exports.updatePhone = functions.https.onCall((data, context) => {
       "Invalid Phone Number was sent"
     );
   } else {
-    getAuth().setCustomUserClaims(context.auth.uid, {
-      phone_number: data.phone_number,
-    });
+
+    getAuth()
+      .getUser(context.auth.uid)
+      .then((userRecord) => {
+        const customClaims = userRecord.customClaims;
+        console.log(customClaims);
+        const newCustomClaim = {
+          ...customClaims,
+          phone_number: data.phone_number,
+        };
+        getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
+      })
+      .catch((error) => {
+        console.log("Error fetching user data:", error);
+      });
+  }
+});
+
+exports.addRole = functions.https.onCall((data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "Only Authenticated User can change role"
+    );
+  }
+
+  if (data?.self === true) {
+    getAuth()
+      .getUser(context.auth.uid)
+      .then((userRecord) => {
+        const customClaims = userRecord.customClaims;
+        const newCustomClaim = { ...customClaims, roles: data.roles };
+        getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
+      })
+      .catch((error) => {
+        console.log("Error fetching user data:", error);
+      });
+  } else {
+    getAuth()
+      .getUser(data.uid)
+      .then((userRecord) => {
+        const customClaims = userRecord.customClaims;
+        const newCustomClaim = { ...customClaims, roles: data.roles };
+        getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
+      })
+      .catch((error) => {
+        console.log("Error fetching user data:", error);
+      });
   }
 });
 

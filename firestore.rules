@@ -1,12 +1,12 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-     match /{document=**} {
-      allow read, write: if true;
-    }
+    //  match /{document=**} {
+    //   allow read, write: if true;
+    // }
     match /menu/{menuId} {
       allow get: if request.auth != null;
-      allow update : if request.auth.token.level in ['stall_admin' , 'super_admin']
+      allow update : if request.auth.token.roles in ['stall_admin' , 'super_admin']
     }
 
     function getOrder(orderId){
@@ -18,5 +18,100 @@ service cloud.firestore {
       || resource.data.user_info.uid == request.auth.uid)
     }
 
+    match /orders/{orderId} {
+      allow read, list: if (request.auth.token.roles in [
+    "stall_admin1",
+    "stall_admin2",
+    "stall_admin3",
+    "stall_admin4",
+    "stall_admin5",
+    "stall_admin6",
+    "stall_admin7",
+    "stall_admin8",
+    "stall_admin9",
+    "stall_admin10",
+    "stall_admin11",
+    "stall_admin12",
+    "super_admin",
+    "cashier"]
+    || resource.data.payment_status == "unpaid") 
   }
+
+  match /orders/{orderId} {
+      allow read, list: if (request.auth.token.roles in [
+    "stall_admin1",
+    "stall_admin2",
+    "stall_admin3",
+    "stall_admin4",
+    "stall_admin5",
+    "stall_admin6",
+    "stall_admin7",
+    "stall_admin8",
+    "stall_admin9",
+    "stall_admin10",
+    "stall_admin11",
+    "stall_admin12",
+    "super_admin",
+    "cashier"]
+    || resource.data.payment_status == "paid") 
+  }
+
+  match /orders/{orderId} {
+      allow read, list: if (request.auth.token.roles in [
+    "stall_admin1",
+    "stall_admin2",
+    "stall_admin3",
+    "stall_admin4",
+    "stall_admin5",
+    "stall_admin6",
+    "stall_admin7",
+    "stall_admin8",
+    "stall_admin9",
+    "stall_admin10",
+    "stall_admin11",
+    "stall_admin12",
+    "super_admin",
+    "cashier"]
+    || resource.data.payment_status == "cancelled") 
+  }
+
+  match /orders/{orderId} {
+      allow read, list: if (request.auth.token.roles in [
+    "stall_admin1",
+    "stall_admin2",
+    "stall_admin3",
+    "stall_admin4",
+    "stall_admin5",
+    "stall_admin6",
+    "stall_admin7",
+    "stall_admin8",
+    "stall_admin9",
+    "stall_admin10",
+    "stall_admin11",
+    "stall_admin12",
+    "super_admin",
+    "cashier"]
+    || resource.data.order_id == request.resource.data.order_id) 
+  }
+
+   match /orders/{orderId} {
+    
+      allow update : if (request.auth.token.roles in [
+    "stall_admin1",
+    "stall_admin2",
+    "stall_admin3",
+    "stall_admin4",
+    "stall_admin5",
+    "stall_admin6",
+    "stall_admin7",
+    "stall_admin8",
+    "stall_admin9",
+    "stall_admin10",
+    "stall_admin11",
+    "stall_admin12",
+    "super_admin",
+    "cashier"]
+    ) || request.resource.id == resource.id
+    }
+}
 }

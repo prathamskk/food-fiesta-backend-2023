@@ -79,7 +79,7 @@ const stall_admin9 = document.getElementById("stall_admin9");
 const stall_admin10 = document.getElementById("stall_admin10");
 const stall_admin11 = document.getElementById("stall_admin11");
 const stall_admin12 = document.getElementById("stall_admin12");
-const super_admin = document.getElementById("super_admin");
+const refund = document.getElementById("refund");
 const cashier = document.getElementById("cashier");
 
 function createRoleArray() {
@@ -96,7 +96,7 @@ function createRoleArray() {
     stall_admin10,
     stall_admin11,
     stall_admin12,
-    super_admin,
+    refund,
     cashier,
   ];
   console.log(cashier.checked);

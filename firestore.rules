@@ -44,7 +44,7 @@ service cloud.firestore {
     "stall_admin10",
     "stall_admin11",
     "stall_admin12",
-    "super_admin",
+    "refund",
     "cashier"]
     || resource.data.payment_status == "unpaid") 
   }
@@ -63,7 +63,7 @@ service cloud.firestore {
     "stall_admin10",
     "stall_admin11",
     "stall_admin12",
-    "super_admin",
+    "refund",
     "cashier"]
     || resource.data.payment_status == "paid") 
   }
@@ -82,7 +82,7 @@ service cloud.firestore {
     "stall_admin10",
     "stall_admin11",
     "stall_admin12",
-    "super_admin",
+    "refund",
     "cashier"]
     || resource.data.payment_status == "cancelled") 
   }
@@ -101,7 +101,7 @@ service cloud.firestore {
     "stall_admin10",
     "stall_admin11",
     "stall_admin12",
-    "super_admin",
+    "refund",
     "cashier"]
     || resource.data.order_id == request.resource.data.order_id) 
   }
@@ -120,7 +120,7 @@ service cloud.firestore {
     "stall_admin10",
     "stall_admin11",
     "stall_admin12",
-    "super_admin",
+    "refund",
     "cashier"]
     ||  request.get('stall_order.stall1.status', null) == null ||
     request.get('stall_order.stall2.status', null) == null ||
@@ -163,7 +163,7 @@ service cloud.firestore {
     "stall_admin10",
     "stall_admin11",
     "stall_admin12",
-    "super_admin",
+    "refund",
     "cashier"]
     ) || request.resource.id == resource.id
     }

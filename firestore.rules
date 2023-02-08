@@ -6,8 +6,20 @@ service cloud.firestore {
     // }
     match /menu/{menuId} {
       allow get: if request.auth != null;
-      allow update : if request.auth.token.roles in ['stall_admin' , 'super_admin']
-    }
+      allow update : if (request.auth.token.roles in [
+    "stall_admin1",
+    "stall_admin2",
+    "stall_admin3",
+    "stall_admin4",
+    "stall_admin5",
+    "stall_admin6",
+    "stall_admin7",
+    "stall_admin8",
+    "stall_admin9",
+    "stall_admin10",
+    "stall_admin11",
+    "stall_admin12"]
+    || request.resource.id == resource.id)}
 
     function getOrder(orderId){
       return get(/databases/$(database)/documents/orders/$(orderId)).data
@@ -94,6 +106,48 @@ service cloud.firestore {
     || resource.data.order_id == request.resource.data.order_id) 
   }
 
+  match /orders/{orderId} {
+      allow read, list: if (request.auth.token.roles in [
+    "stall_admin1",
+    "stall_admin2",
+    "stall_admin3",
+    "stall_admin4",
+    "stall_admin5",
+    "stall_admin6",
+    "stall_admin7",
+    "stall_admin8",
+    "stall_admin9",
+    "stall_admin10",
+    "stall_admin11",
+    "stall_admin12",
+    "super_admin",
+    "cashier"]
+    ||  request.get('stall_order.stall1.status', null) == null ||
+    request.get('stall_order.stall2.status', null) == null ||
+    request.get('stall_order.stall3.status', null) == null ||
+    request.get('stall_order.stall4.status', null) == null ||
+    request.get('stall_order.stall5.status', null) == null ||
+    request.get('stall_order.stall6.status', null) == null ||
+    request.get('stall_order.stall7.status', null) == null ||
+    request.get('stall_order.stall8.status', null) == null ||
+    request.get('stall_order.stall9.status', null) == null ||
+    request.get('stall_order.stall10.status', null) == null ||
+    request.get('stall_order.stall11.status', null) == null ||
+    request.get('stall_order.stall12.status', null) == null ||
+     request.resource.data.stall_order.stall1.status ||
+      request.resource.data.stall_order.stall2.status ||
+       request.resource.data.stall_order.stall3.status ||
+       request.resource.data.stall_order.stall4.status ||
+       request.resource.data.stall_order.stall5.status ||
+       request.resource.data.stall_order.stall6.status ||
+       request.resource.data.stall_order.stall7.status ||
+       request.resource.data.stall_order.stall8.status ||
+       request.resource.data.stall_order.stall9.status ||
+       request.resource.data.stall_order.stall10.status ||
+       request.resource.data.stall_order.stall11.status ||
+       request.resource.data.stall_order.stall12.status ) 
+  }
+
    match /orders/{orderId} {
     
       allow update : if (request.auth.token.roles in [
@@ -113,5 +167,6 @@ service cloud.firestore {
     "cashier"]
     ) || request.resource.id == resource.id
     }
+    
 }
 }

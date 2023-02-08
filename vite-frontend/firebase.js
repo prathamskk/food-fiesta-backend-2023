@@ -44,8 +44,23 @@ import {
   reauthenticateWithRedirect,
   RecaptchaVerifier,
 } from "firebase/auth";
-import { firebaseConfig } from "./config";
 import { where } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+
+  projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGE_SENDER_ID,
+
+  appId: import.meta.env.VITE_FIREBASE_APPID,
+
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENTID,
+};
 
 function initializeServices() {
   const isConfigured = getApps().length > 0;

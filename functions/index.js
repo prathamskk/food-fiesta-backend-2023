@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const { getAuth } = require("firebase-admin/auth");
+const {getAuth} = require("firebase-admin/auth");
 admin.initializeApp();
 
 // exports.newUserSignup = functions.auth.user().onCreate(user => {
@@ -19,81 +19,80 @@ admin.initializeApp();
 exports.updatePhone = functions.https.onCall((data, context) => {
   if (!context.auth) {
     throw new functions.https.HttpsError(
-      "unauthenticated",
-      "Only Authenticated User can Submit Orders Update Phone Number"
+        "unauthenticated",
+        "Only Authenticated User can Submit Orders Update Phone Number",
     );
   }
   if (Math.ceil(Math.log10(data.phone_number + 1)) != 10) {
     throw new functions.https.HttpsError(
-      "invalid-argument",
-      "Invalid Phone Number was sent"
+        "invalid-argument",
+        "Invalid Phone Number was sent",
     );
   } else {
-
     getAuth()
-      .getUser(context.auth.uid)
-      .then((userRecord) => {
-        const customClaims = userRecord.customClaims;
-        console.log(customClaims);
-        const newCustomClaim = {
-          ...customClaims,
-          phone_number: data.phone_number,
-        };
-        getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
-      })
-      .catch((error) => {
-        console.log("Error fetching user data:", error);
-      });
+        .getUser(context.auth.uid)
+        .then((userRecord) => {
+          const customClaims = userRecord.customClaims;
+          console.log(customClaims);
+          const newCustomClaim = {
+            ...customClaims,
+            phone_number: data.phone_number,
+          };
+          getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
+        })
+        .catch((error) => {
+          console.log("Error fetching user data:", error);
+        });
   }
 });
 
 exports.addRole = functions.https.onCall((data, context) => {
   if (!context.auth) {
     throw new functions.https.HttpsError(
-      "unauthenticated",
-      "Only Authenticated User can change role"
+        "unauthenticated",
+        "Only Authenticated User can change role",
     );
   }
 
   if (data?.self === true) {
     getAuth()
-      .getUser(context.auth.uid)
-      .then((userRecord) => {
-        const customClaims = userRecord.customClaims;
-        const newCustomClaim = { ...customClaims, roles: data.roles };
-        getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
-      })
-      .catch((error) => {
-        console.log("Error fetching user data:", error);
-      });
+        .getUser(context.auth.uid)
+        .then((userRecord) => {
+          const customClaims = userRecord.customClaims;
+          const newCustomClaim = {...customClaims, roles: data.roles};
+          getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
+        })
+        .catch((error) => {
+          console.log("Error fetching user data:", error);
+        });
   } else {
     getAuth()
-      .getUser(data.uid)
-      .then((userRecord) => {
-        const customClaims = userRecord.customClaims;
-        const newCustomClaim = { ...customClaims, roles: data.roles };
-        getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
-      })
-      .catch((error) => {
-        console.log("Error fetching user data:", error);
-      });
+        .getUser(data.uid)
+        .then((userRecord) => {
+          const customClaims = userRecord.customClaims;
+          const newCustomClaim = {...customClaims, roles: data.roles};
+          getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
+        })
+        .catch((error) => {
+          console.log("Error fetching user data:", error);
+        });
   }
 });
 
 exports.newOrder = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
     throw new functions.https.HttpsError(
-      "unauthenticated",
-      "Only Authenticated User can Submit Orders"
+        "unauthenticated",
+        "Only Authenticated User can Submit Orders",
     );
   } else {
     const user = await getAuth().getUser(context.auth.token.uid);
     // const user = await admin.firestore().collection('users').doc(context.auth.token.uid).get();
     const menu = await admin
-      .firestore()
-      .collection("menu")
-      .doc("menu_items")
-      .get();
+        .firestore()
+        .collection("menu")
+        .doc("menu_items")
+        .get();
     const menu_data = menu.data();
     const order = {};
     order.order_id = random_six_digit_order_id_generator();
@@ -112,10 +111,10 @@ exports.newOrder = functions.https.onCall(async (data, context) => {
 
 function order_items_formatter(menu_data, data) {
   const formatted_order = {};
-  for (let stall_no in data) {
+  for (const stall_no in data) {
     formatted_order[stall_no] = {};
     const stall_suborder = {};
-    for (let item_id in data[stall_no]) {
+    for (const item_id in data[stall_no]) {
       stall_suborder[item_id] = {
         price: menu_data[stall_no][item_id].price,
         name: menu_data[stall_no][item_id].name,
@@ -131,7 +130,7 @@ function order_items_formatter(menu_data, data) {
 }
 
 function random_six_digit_order_id_generator() {
-  var minm = 100000;
-  var maxm = 999999;
+  const minm = 100000;
+  const maxm = 999999;
   return Math.floor(Math.random() * (maxm - minm + 1)) + minm;
 }

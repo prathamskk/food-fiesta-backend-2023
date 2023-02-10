@@ -61,9 +61,17 @@ exports.addRole = functions.https.onCall((data, context) => {
     getAuth()
       .getUser(context.auth.uid)
       .then((userRecord) => {
-        const customClaims = userRecord.customClaims;
-        const newCustomClaim = { ...customClaims, roles: data.roles };
-        getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
+        if (context.auth.token.email === "prathamskk@gmail.com" || context.auth.token.email === "nikhilpangaonkar90@gmail.com") {
+          const customClaims = userRecord.customClaims;
+          const newCustomClaim = { ...customClaims, roles: data.roles };
+          getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);
+        } else {
+          throw new functions.https.HttpsError(
+            "unauthenticated",
+            "Only Authenticated User can change rolepra"
+          );
+        }
+
       })
       .catch((error) => {
         console.log("Error fetching user data:", error);

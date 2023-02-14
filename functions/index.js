@@ -126,6 +126,12 @@ function order_items_formatter(menu_data, data) {
     formatted_order[stall_no] = {};
     const stall_suborder = {};
     for (const item_id in data[stall_no]) {
+      if (data[stall_no][item_id] > 15) {
+        throw new functions.https.HttpsError(
+          "out-of-range",
+          "Cannot add more than 15 of same item"
+        );
+      }
       stall_suborder[item_id] = {
         price: menu_data[stall_no][item_id].price,
         name: menu_data[stall_no][item_id].name,

@@ -59,100 +59,85 @@ function handleGoogleLogin() {
 // createUserWithEmailAndPassword(auth, "prathamskk@gmail.com","12345678")
 // signInWithEmailAndPassword(auth, "normal@gmail.com","12345678")
 
-const orderButton = document.getElementById("orderButton");
-const signInButton = document.getElementById("signInButton");
+// const orderButton = document.getElementById("orderButton");
+// const signInButton = document.getElementById("signInButton");
 const signOutButton = document.getElementById("signOutButton");
-const verifyCodeButton = document.getElementById("verify-code-button");
-const updateProfileButton = document.getElementById("updateProfileButton");
+// const verifyCodeButton = document.getElementById("verify-code-button");
+// const updateProfileButton = document.getElementById("updateProfileButton");
 const setcustomrole = document.getElementById("setcustomrole");
-const setcustomroleSelf = document.getElementById("setcustomroleSelf");
+// const setcustomroleSelf = document.getElementById("setcustomroleSelf");
 const code_input = document.getElementById("code_input");
-const stall_admin1 = document.getElementById("stall_admin1");
-const stall_admin2 = document.getElementById("stall_admin2");
-const stall_admin3 = document.getElementById("stall_admin3");
-const stall_admin4 = document.getElementById("stall_admin4");
-const stall_admin5 = document.getElementById("stall_admin5");
-const stall_admin6 = document.getElementById("stall_admin6");
-const stall_admin7 = document.getElementById("stall_admin7");
-const stall_admin8 = document.getElementById("stall_admin8");
-const stall_admin9 = document.getElementById("stall_admin9");
-const stall_admin10 = document.getElementById("stall_admin10");
-const stall_admin11 = document.getElementById("stall_admin11");
-const stall_admin12 = document.getElementById("stall_admin12");
+const stall01 = document.getElementById("stall-01");
+const stall02 = document.getElementById("stall-02");
+const stall03 = document.getElementById("stall-03");
+const stall04 = document.getElementById("stall-04");
+const stall05 = document.getElementById("stall-05");
+const stall06 = document.getElementById("stall-06");
+const stall07 = document.getElementById("stall-07");
+const stall08 = document.getElementById("stall-08");
+const stall09 = document.getElementById("stall-09");
+const stall10 = document.getElementById("stall-10");
+const stall11 = document.getElementById("stall-11");
+const stall12 = document.getElementById("stall-12");
 const refund = document.getElementById("refund");
 const cashier = document.getElementById("cashier");
 
-function createRoleArray() {
-  const available_roles = [
-    stall_admin1,
-    stall_admin2,
-    stall_admin3,
-    stall_admin4,
-    stall_admin5,
-    stall_admin6,
-    stall_admin7,
-    stall_admin8,
-    stall_admin9,
-    stall_admin10,
-    stall_admin11,
-    stall_admin12,
-    refund,
-    cashier,
-  ];
-  console.log(cashier.checked);
-  const selected_roles = [];
-  for (let x of available_roles) {
-    if (x.checked) {
-      selected_roles.push(x.id);
-    }
-  }
-  console.log(selected_roles);
-  return selected_roles;
-}
 
 setcustomrole.addEventListener("click", () => {
-  const { functions } = getFirebase();
-  const selected_roles = createRoleArray();
-  const addRole = httpsCallable(functions, "addRole");
-  addRole({ uid: code_input.value, roles: selected_roles });
+  const value = document.querySelector('input[name="roles"]:checked')?.value;
+  console.log(value);
+  if (value !== undefined) {
+    const { functions } = getFirebase();
+    const addRole = httpsCallable(functions, "addRole");
+    addRole({ uid: code_input.value, roles: [value] });
+  } else {
+    console.log("no role radio selected");
+  }
 });
 
-setcustomroleSelf.addEventListener("click", () => {
-  const { functions } = getFirebase();
-  console.log("setcs");
-  const selected_roles = createRoleArray();
-  const addRole = httpsCallable(functions, "addRole");
-  addRole({ self: true, roles: selected_roles });
-});
 
-orderButton.addEventListener("click", () => {
-  newOrder({
-    stall1: {
-      23: 3,
-      24: 3,
-    },
-    stall2: {
-      45: 1,
-    },
-  }).then(console.log("successfully added new order"));
-});
+// setcustomroleSelf.addEventListener("click", () => {
+//   const value = document.querySelector('input[name="roles"]:checked')?.value;
+//   console.log(value);
+//   if (value !== undefined) {
+//     const { functions } = getFirebase();
+//     console.log("setcs");
+//     const addRole = httpsCallable(functions, "addRole");
+//     addRole({ self: true, roles: [value] });
+//   } else {
 
-updateProfileButton.addEventListener("click", () => {
-  updatePhone(8108980846);
-});
+//     console.log("no role radio selected");
+//   }
+// });
+
+// orderButton.addEventListener("click", () => {
+//   newOrder({
+//     stall1: {
+//       23: 3,
+//       24: 3,
+//     },
+//     stall2: {
+//       45: 1,
+//     },
+//   }).then(console.log("successfully added new order"));
+// });
+
+// updateProfileButton.addEventListener("click", () => {
+//   updatePhone(8108980846);
+// });
 
 signOutButton.addEventListener("click", () => {
   auth.signOut();
 });
 
-onAuth((user) => {
-  if (!user) {
-    return console.log("No user logged in");
-  }
-  console.log("user logged in", user);
+// onAuth((user) => {
+//   if (!user) {
+//     return console.log("No user logged in");
+//   }
+//   console.log("user logged in", user);
 
-  getMenu();
-});
+//   getMenu();
+// });
 
 // signInButton.addEventListener("click", () => {
 //   signInWithEmailAndPassword(auth, "prathamskk@gmail.com", "12345678");

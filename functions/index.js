@@ -16,7 +16,12 @@ admin.initializeApp();
 //   return doc.delete()
 // })
 
-exports.updatePhone = functions.https.onCall((data, context) => {
+exports.updatePhone = functions.runWith({ enforceAppCheck: true }).https.onCall((data, context) => {
+  if (context.app == undefined) {
+    throw new functions.https.HttpsError(
+      'failed-precondition',
+      'The function must be called from an App Check verified app.')
+  }
   if (!context.auth) {
     throw new functions.https.HttpsError(
       "unauthenticated",
@@ -49,7 +54,12 @@ exports.updatePhone = functions.https.onCall((data, context) => {
   }
 });
 
-exports.addRole = functions.https.onCall((data, context) => {
+exports.addRole = functions.runWith({ enforceAppCheck: true }).https.onCall((data, context) => {
+  if (context.app == undefined) {
+    throw new functions.https.HttpsError(
+      'failed-precondition',
+      'The function must be called from an App Check verified app.')
+  }
   if (!context.auth) {
     throw new functions.https.HttpsError(
       "unauthenticated",
@@ -90,7 +100,12 @@ exports.addRole = functions.https.onCall((data, context) => {
   }
 });
 
-exports.newOrder = functions.https.onCall(async (data, context) => {
+exports.newOrder = functions.runWith({ enforceAppCheck: true }).https.onCall(async (data, context) => {
+  if (context.app == undefined) {
+    throw new functions.https.HttpsError(
+      'failed-precondition',
+      'The function must be called from an App Check verified app.')
+  }
   if (!context.auth) {
     throw new functions.https.HttpsError(
       "unauthenticated",

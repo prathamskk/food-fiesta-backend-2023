@@ -65,11 +65,9 @@ const firebaseConfig = {
 };
 
 function initializeServices() {
-  self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-
   const isConfigured = getApps().length > 0;
   const firebaseApp = initializeApp(firebaseConfig);
-  self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+  // self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
   const appCheck = initializeAppCheck(firebaseApp, {
     provider: new ReCaptchaV3Provider('6Le65I0kAAAAANibM2WZrCQdBJWIVzn7AKz_H6j4'),
     // Optional argument. If true, the SDK automatically refreshes App Check

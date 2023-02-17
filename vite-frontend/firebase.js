@@ -65,8 +65,11 @@ const firebaseConfig = {
 };
 
 function initializeServices() {
+  self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+
   const isConfigured = getApps().length > 0;
   const firebaseApp = initializeApp(firebaseConfig);
+  self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
   const appCheck = initializeAppCheck(firebaseApp, {
     provider: new ReCaptchaV3Provider('6Le65I0kAAAAANibM2WZrCQdBJWIVzn7AKz_H6j4'),
     // Optional argument. If true, the SDK automatically refreshes App Check
@@ -113,6 +116,390 @@ export function getMenu() {
     console.log("Current data: ", document.data());
   });
   return { unsub };
+}
+
+export function updateMenu() {
+  const MENU_DOC_ID = "menu_items";
+  const MENU_COLLECTION_ID = "menu";
+  const { firestore } = getFirebase();
+  const menuCol = collection(firestore, MENU_COLLECTION_ID);
+  const menuDoc = doc(menuCol, MENU_DOC_ID);
+  setDoc(menuDoc, {
+    "stall-01": {
+      "20": {
+        "availability": true,
+        "name": "chocolate sandwich",
+        "price": 40
+      },
+      "21": {
+        "price": "40",
+        "name": "chocolate sandwich with ice cream",
+        "availability": true
+      },
+      "22": {
+        "availability": true,
+        "price": 40,
+        "name": "chocolate milkshake"
+      },
+      "23": {
+        "availability": true,
+        "name": " blueberry milkshake",
+        "price": 40
+      },
+      "24": {
+        "price": "40",
+        "name": "chocolate milkshake with ice cream",
+        "availability": true
+      },
+      "25": {
+        "availability": true,
+        "price": 70,
+        "name": "chocolate sandwich (combo)"
+      },
+      "26": {
+        "availability": true,
+        "price": 100,
+        "name": "chocolate sandwich with ice cream (combo)"
+      }
+    },
+    "stall-02": {
+      "10": {
+        "price": 35,
+        "availability": true,
+        "name": "grilled sandwich"
+      },
+      "11": {
+        "availability": true,
+        "price": 49,
+        "name": "grilled cheese sandwich"
+      },
+      "12": {
+        "availability": true,
+        "name": "bahubali sandwich",
+        "price": 99
+      },
+      "13": {
+        "name": "schezwan fried rice (half)",
+        "availability": true,
+        "price": 35
+      },
+      "14": {
+        "price": 49,
+        "name": "schezwan fried rice (full)",
+        "availability": true
+      },
+      "15": {
+        "availability": true,
+        "price": 89,
+        "name": "grilled cheese sandwich + schezwan fried rice"
+      }
+    },
+    "stall-03": {
+      "30": {
+        "availability": true,
+        "name": "green apple sparkle",
+        "price": 60
+      },
+      "31": {
+        "price": 50,
+        "name": "blue sparkle",
+        "availability": true
+      },
+      "32": {
+        "name": "virgin mojito",
+        "price": 50,
+        "availability": true
+      }
+    },
+    "stall-04": {
+      "38": {
+        "price": 40,
+        "availability": true,
+        "name": "salted twister's"
+      },
+      "39": {
+        "price": 50,
+        "name": "peri-peri twister's",
+        "availability": true
+      },
+      "40": {
+        "price": 50,
+        "name": "chatpatta twister's",
+        "availability": true
+      },
+      "41": {
+        "name": "mayonnaise twister's",
+        "availability": true,
+        "price": 60
+      },
+      "42": {
+        "price": 60,
+        "name": "cheesy twister's",
+        "availability": true
+      },
+      "43": {
+        "price": 80,
+        "availability": true,
+        "name": "DP's special twister's"
+      },
+      "44": {
+        "availability": true,
+        "price": 40,
+        "name": "salted french-fries"
+      },
+      "45": {
+        "price": 50,
+        "availability": true,
+        "name": "peri-peri french-fries"
+      },
+      "46": {
+        "availability": true,
+        "name": "chatpatta french-fries",
+        "price": 50
+      },
+      "47": {
+        "name": "mayonnaise french-fries",
+        "price": 60,
+        "availability": true
+      },
+      "48": {
+        "price": 60,
+        "availability": true,
+        "name": "cheesy french-fries"
+      },
+      "49": {
+        "price": 80,
+        "name": "DP's special french-fries",
+        "availability": true
+      }
+    },
+    "stall-05": {
+      "50": {
+        "availability": true,
+        "price": 30,
+        "name": "chocolate brownies (1 pcs)"
+      },
+      "51": {
+        "name": "strawberryBlondie brownies (1 pcs)",
+        "price": 50,
+        "availability": true
+      },
+      "52": {
+        "name": "nutella brownies (1 pcs)",
+        "price": 50,
+        "availability": true
+      },
+      "53": {
+        "name": "Ferrero Rocher brownies (1 pcs)",
+        "availability": true,
+        "price": 65
+      },
+      "54": {
+        "name": "brownies with ice-cream (1 pcs)",
+        "availability": true,
+        "price": 55
+      },
+      "55": {
+        "price": 40,
+        "name": "chocolate mousse cupcakes (1 pcs)",
+        "availability": true
+      },
+      "56": {
+        "price": 50,
+        "name": "chocolate ganche cupcakes (1 pcs)",
+        "availability": true
+      },
+      "57": {
+        "availability": true,
+        "price": 25,
+        "name": "choco-chips (2 pcs)"
+      },
+      "58": {
+        "name": "choco-chips (5 pcs)",
+        "price": 50,
+        "availability": true
+      },
+      "59": {
+        "name": "chocolate cake jars (1 pcs)",
+        "availability": true,
+        "price": 40
+      },
+      "60": {
+        "price": 50,
+        "availability": true,
+        "name": "red velvet cake jars (1 pcs)"
+      },
+      "61": {
+        "availability": true,
+        "name": "biscof cake jars (1 pcs)",
+        "price": 60
+      },
+      "62": {
+        "name": "chocolate cake jars (2 pcs)",
+        "availability": true,
+        "price": 70
+      },
+      "63": {
+        "price": 90,
+        "name": "red velvet cake jars (2 pcs)",
+        "availability": true
+      },
+      "64": {
+        "availability": true,
+        "price": 110,
+        "name": "biscof cake jars (2 pcs)"
+      },
+      "65": {
+        "name": "almond brittle (1 pcs)",
+        "price": 25,
+        "availability": true
+      },
+      "66": {
+        "name": "almond brittle (2 pcs)",
+        "price": 45,
+        "availability": true
+      }
+    },
+    "stall-06": {
+      "70": {
+        "price": 40,
+        "name": "cheesy desi tacos",
+        "availability": true
+      },
+      "71": {
+        "price": 35,
+        "availability": true,
+        "name": "mixed fruit custard"
+      },
+      "72": {
+        "availability": true,
+        "name": "thanda masala chaas",
+        "price": 15
+      },
+      "73": {
+        "name": "try your luck on combos",
+        "availability": true,
+        "price": 60
+      }
+    },
+    "stall-07": {
+      "80": {
+        "price": 20,
+        "availability": true,
+        "name": "water pav"
+      },
+      "81": {
+        "price": 25,
+        "name": "water sandwich",
+        "availability": true
+      },
+      "82": {
+        "name": "mayo sandwich",
+        "availability": true,
+        "price": 30
+      },
+      "83": {
+        "price": 40,
+        "name": "oreo milkshake",
+        "availability": true
+      }
+    },
+    "stall-08": {
+      "90": {
+        "name": "oreo mousse",
+        "price": "30",
+        "availability": true
+      },
+      "91": {
+        "availability": true,
+        "price": 30,
+        "name": "blueberry moussse"
+      },
+      "92": {
+        "availability": true,
+        "name": "coffee mousse",
+        "price": 30
+      },
+      "93": {
+        "price": 30,
+        "name": "strawberry mousse",
+        "availability": true
+      },
+      "94": {
+        "name": "cakepop's",
+        "price": 15,
+        "availability": true
+      }
+    },
+    "stall-09": {
+      "100": {
+        "price": 20,
+        "name": "pani puri",
+        "availability": true
+      },
+      "101": {
+        "price": 15,
+        "availability": true,
+        "name": "pav bhaji baveli"
+      }
+    },
+    "stall-10": {
+      "110": {
+        "availability": true,
+        "name": "Delhi kurkure canapes",
+        "price": 30
+      },
+      "111": {
+        "availability": true,
+        "name": "jain special canapes",
+        "price": 30
+      },
+      "112": {
+        "availability": true,
+        "name": "chocolicious mer chilli mili canapes",
+        "price": 35
+      },
+      "113": {
+        "availability": true,
+        "name": "Plain chocolates (1 Pcs)",
+        "price": 5
+      },
+      "114": {
+        "availability": true,
+        "name": "milk chocolates (1 Pcs)",
+        "price": 5
+      },
+      "115": {
+        "availability": true,
+        "name": "white chocolates (1 Pcs)",
+        "price": 5
+      },
+      "116": {
+        "availability": true,
+        "name": "dark chocolates (1 Pcs)",
+        "price": 5
+      }
+    },
+    "stall-11": {
+      "120": {
+        "availability": true,
+        "name": "Nimbu Pani",
+        "price": 15
+      },
+      "121": {
+        "availability": true,
+        "name": "jNimbu soda",
+        "price": 25
+      }
+    },
+    "stall-12": {
+      "130": {
+        "availability": true,
+        "name": "Chinese Bhel",
+        "price": 20
+      }
+    }
+  })
 }
 
 export function onAuth(callback) {

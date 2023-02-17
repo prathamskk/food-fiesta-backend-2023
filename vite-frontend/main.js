@@ -8,6 +8,7 @@ import {
   updatePhone,
   onSignInSubmit,
   verifyCode,
+  updateMenu,
 } from "./firebase";
 
 import {
@@ -65,6 +66,7 @@ const signOutButton = document.getElementById("signOutButton");
 // const verifyCodeButton = document.getElementById("verify-code-button");
 // const updateProfileButton = document.getElementById("updateProfileButton");
 const setcustomrole = document.getElementById("setcustomrole");
+const setMenu = document.getElementById("setMenu");
 // const setcustomroleSelf = document.getElementById("setcustomroleSelf");
 const code_input = document.getElementById("code_input");
 const stall01 = document.getElementById("stall-01");
@@ -95,6 +97,10 @@ setcustomrole.addEventListener("click", () => {
   }
 });
 
+
+setMenu.addEventListener("click", () => {
+  updateMenu()
+})
 
 // setcustomroleSelf.addEventListener("click", () => {
 //   const value = document.querySelector('input[name="roles"]:checked')?.value;

@@ -9,6 +9,7 @@ import {
   onSignInSubmit,
   verifyCode,
   updateMenu,
+  getOrders,
 } from "./firebase";
 
 import {
@@ -67,6 +68,7 @@ const signOutButton = document.getElementById("signOutButton");
 // const updateProfileButton = document.getElementById("updateProfileButton");
 const setcustomrole = document.getElementById("setcustomrole");
 const setMenu = document.getElementById("setMenu");
+const logOrders = document.getElementById("logOrders");
 // const setcustomroleSelf = document.getElementById("setcustomroleSelf");
 const code_input = document.getElementById("code_input");
 const stall01 = document.getElementById("stall-01");
@@ -170,3 +172,8 @@ signOutButton.addEventListener("click", () => {
 //   e.preventDefault();
 //   verifyCode(code_input.value);
 // });
+
+logOrders.addEventListener("click", () => {
+  getOrders();
+})
+

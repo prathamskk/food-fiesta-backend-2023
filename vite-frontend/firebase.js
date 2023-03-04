@@ -27,6 +27,7 @@ import {
   addDoc,
   serverTimestamp,
   setDoc,
+  getDocs,
 } from "firebase/firestore";
 
 import {
@@ -116,6 +117,29 @@ export function getMenu() {
     console.log("Current data: ", document.data());
   });
   return { unsub };
+}
+
+export function getOrders() {
+  const ORDERS_COLLECTION_ID = "orders";
+  const { firestore } = getFirebase();
+  const orderCol = collection(firestore, ORDERS_COLLECTION_ID);
+  const q = query(
+    orderCol,
+    // where("payment_status", "==", "unpaid"),
+    orderBy("order_placed_timestamp", "asc"),
+    // limit(15)
+  );
+  const orderdocs = getDocs(q)
+
+  orderdocs.then((snapshot) => {
+    const orders = snapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
+    console.log(orders);
+  })
 }
 
 export function updateMenu() {

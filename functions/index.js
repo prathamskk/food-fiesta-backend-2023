@@ -71,7 +71,7 @@ exports.addRole = functions.runWith({ enforceAppCheck: true }).https.onCall((dat
     getAuth()
       .getUser(context.auth.uid)
       .then((userRecord) => {
-        if (context.auth.token.email === "prathamskk@gmail.com" || context.auth.token.email === "nikhilpangaonkar90@gmail.com") {
+        if (context.auth.token.email === "pratham.kamble15754@sakec.ac.in" || context.auth.token.email === "nikhil.pangaonkar15601@sakec.ac.in") {
           const customClaims = userRecord.customClaims;
           const newCustomClaim = { ...customClaims, roles: data.roles };
           getAuth().setCustomUserClaims(userRecord.uid, newCustomClaim);

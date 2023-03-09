@@ -447,7 +447,7 @@ export function updateMenu() {
       "102": {
         "availability": true,
         "name": "Onion Garlic cheese square",
-        "price": 80
+        "price": 40
       }
     }
   }

@@ -173,7 +173,7 @@ export function updateMenu() {
       },
       "14": {
         "availability": true,
-        "name": "Gluab Jamun (2 Pcs)",
+        "name": "Gulab Jamun (2 Pcs)",
         "price": 20
       }
     },
